@@ -33,7 +33,7 @@ async function run() {
     const touristsSpotCollection = client.db('tourismManagement').collection('touristsSpot')
 
     // get all country spots
-    app.get('/touristsSpots' , async(req, res) => {
+    app.get('/touristsSpots', async(req, res) => {
         const result = await touristsSpotCollection.find().toArray()
         res.send(result)
     })
@@ -43,6 +43,13 @@ async function run() {
       const id = req.params.id
       const query = { _id: new ObjectId(id) }
       const result = await touristsSpotCollection.findOne(query)
+      res.send(result)
+    })
+
+    // save a single country spot in db
+    app.post('/touristsSpot', async(req, res) => {
+      const countryData = req.body
+      const result = await touristsSpotCollection.insertOne(countryData)
       res.send(result)
     })
 
