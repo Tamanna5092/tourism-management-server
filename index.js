@@ -53,6 +53,14 @@ async function run() {
       res.send(result)
     })
 
+    // get all tourist spots added by specific user
+    app.get('/touristsSpots/:email', async(req, res) => {
+      const email = req.params.email
+      const query = {'user.email': email}
+      const result = await touristsSpotCollection.find(query).toArray()
+      res.send(result)
+    })
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
