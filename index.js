@@ -69,6 +69,21 @@ async function run() {
       res.send(result)
     })
 
+    // Update a tourist spot from db
+    app.put('/touristsSpot/:id', async(req, res) => {
+      const id = req.params.id
+      const touristData = req.body
+      const query = { _id: new ObjectId(id) }
+      const options = { upsert: true}
+      const updateSpot = {
+        $set: {
+          ...touristData
+        }
+      }
+      const result = await touristsSpotCollection.updateOne(query,updateSpot, options)
+      res.send(result)
+    })
+
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
